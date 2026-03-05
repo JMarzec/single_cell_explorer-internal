@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useRef } from "react";
+import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { Header } from "@/components/layout/Header";
 import { ScatterPlot } from "@/components/scatter/ScatterPlot";
 import { CellFilter } from "@/components/controls/CellFilter";
@@ -15,6 +15,7 @@ import { PseudotimeHeatmap } from "@/components/analysis/PseudotimeHeatmap";
 import { calculatePseudotime } from "@/components/analysis/TrajectoryAnalysis";
 import { DatasetUploader } from "@/components/upload/DatasetUploader";
 import { generateDemoDataset } from "@/data/demoData";
+import { fetchRemoteDataset } from "@/lib/datasetLoader";
 import { getExpressionData, getMultiGeneExpression, getAveragedExpression, getAnnotationValues, getAnnotationColorMap, calculatePercentile } from "@/lib/expressionUtils";
 import { getPaletteGradientCSS } from "@/lib/colorPalettes";
 import { VisualizationSettings, SingleCellDataset, CellFilterState as CellFilterType, Cell, ClusterInfo, ColorPalette } from "@/types/singleCell";
@@ -25,7 +26,7 @@ import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Generate demo dataset
+// Generate demo dataset as fallback
 const defaultDataset = generateDemoDataset(15000);
 
 // Wrapper that computes pseudotime for the heatmap using the first cluster as root
@@ -61,8 +62,23 @@ const defaultCellFilter: CellFilterType = {
 
 const Index = () => {
   const [dataset, setDataset] = useState<SingleCellDataset>(defaultDataset);
+  const [isLoadingRemote, setIsLoadingRemote] = useState(true);
   const originalDatasetRef = useRef<SingleCellDataset>(defaultDataset);
-  
+
+  // Fetch remote dataset on mount
+  useEffect(() => {
+    fetchRemoteDataset()
+      .then((remoteDataset) => {
+        console.log("Remote dataset loaded:", remoteDataset.metadata.name, remoteDataset.cells.length, "cells");
+        setDataset(remoteDataset);
+        originalDatasetRef.current = remoteDataset;
+      })
+      .catch((err) => {
+        console.warn("Failed to load remote dataset, using demo data:", err);
+      })
+      .finally(() => setIsLoadingRemote(false));
+  }, []);
+
   // Selected cells from lasso/rectangle selection
   const [selectedCells, setSelectedCells] = useState<Cell[]>([]);
   
