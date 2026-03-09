@@ -23,7 +23,7 @@ export function Header({ metadata }: HeaderProps) {
               
 
               
-              <p className="text-sm text-muted-foreground">
+              <p className="text-lg font-bold text-muted-foreground">
                 Single-Cell RNA-seq Explorer
               </p>
             </div>
