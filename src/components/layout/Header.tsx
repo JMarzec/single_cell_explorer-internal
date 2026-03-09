@@ -13,16 +13,16 @@ export function Header({ metadata }: HeaderProps) {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <img 
-              src={accelBioLogo} 
-              alt="AccelBio Logo" 
-              className="h-12 w-auto"
-            />
+            <img
+              src={accelBioLogo}
+              alt="AccelBio Logo"
+              className="h-12 w-auto" />
+            
             <div className="h-8 w-px bg-border" />
             <div>
-              <h1 className="text-lg font-semibold text-foreground">
-                {metadata.name}
-              </h1>
+              
+
+              
               <p className="text-sm text-muted-foreground">
                 Single-Cell RNA-seq Explorer
               </p>
@@ -59,6 +59,6 @@ export function Header({ metadata }: HeaderProps) {
           </div>
         </div>
       </div>
-    </header>
-  );
+    </header>);
+
 }
