@@ -477,11 +477,13 @@ const Index = () => {
               filter={settings.cellFilter}
               onFilterChange={(filter) => handleSettingsChange({ cellFilter: filter })}
             />
-            <GeneSelectionPanel
-              genes={dataset.genes}
-              settings={settings}
-              onSettingsChange={handleSettingsChange}
-            />
+            <div data-tour="gene-selection">
+              <GeneSelectionPanel
+                genes={dataset.genes}
+                settings={settings}
+                onSettingsChange={handleSettingsChange}
+              />
+            </div>
             <ClusterAnnotationTool
               clusters={dataset.clusters}
               onRenameCluster={handleRenameCluster}
