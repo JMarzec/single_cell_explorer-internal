@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Info, Scatter, Search, MousePointer2, Palette, BarChart3, X } from "lucide-react";
+import { Info, Search, MousePointer2, Palette, BarChart3, GitCompareArrows } from "lucide-react";
 import { DatasetMetadata } from "@/types/singleCell";
 import accelBioLogo from "@/assets/AccelBio_logo.png";
 import {
