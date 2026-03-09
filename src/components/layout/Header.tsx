@@ -40,7 +40,7 @@ const guideItems = [
       "Select one or more genes and view their expression distribution across clusters with violin plots or summarised dot plots.",
   },
   {
-    icon: Scatter,
+    icon: GitCompareArrows,
     title: "Differential Expression",
     description:
       "After selecting cells with the lasso tool, run a differential expression analysis to find marker genes for the selected population.",
