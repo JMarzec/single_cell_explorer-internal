@@ -187,13 +187,30 @@ export default function Showcase() {
               Single-Cell Explorer
             </span>
           </div>
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
-          >
-            Open Explorer
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-4">
+              {features.map((f) => (
+                <a
+                  key={f.id}
+                  href={`#${f.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById(f.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {f.title}
+                </a>
+              ))}
+            </div>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
+            >
+              Open Explorer
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </nav>
 
