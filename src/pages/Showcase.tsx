@@ -47,6 +47,7 @@ function RevealSection({
 /* ------------------------------------------------------------------ */
 interface FeatureSection {
   icon: React.ElementType;
+  id: string;
   title: string;
   description: string;
   details: string[];
@@ -58,6 +59,7 @@ interface FeatureSection {
 const features: FeatureSection[] = [
   {
     icon: MousePointer2,
+    id: "scatter",
     title: "Interactive Scatter Plot",
     description:
       "Explore thousands of cells in a 2D t-SNE or UMAP embedding. Each point is a cell — hover for details, lasso-select subsets, and zoom with the scroll wheel.",
@@ -72,6 +74,7 @@ const features: FeatureSection[] = [
   },
   {
     icon: Search,
+    id: "gene-search",
     title: "Gene Expression Search",
     description:
       "Type any gene name to instantly overlay its expression on the scatter plot. The colour gradient highlights where the gene is expressed across all clusters.",
@@ -87,6 +90,7 @@ const features: FeatureSection[] = [
   },
   {
     icon: BarChart3,
+    id: "plots",
     title: "Violin & Dot Plots",
     description:
       "Compare gene expression distributions across clusters with publication-ready violin plots, feature plots, and dot plots.",
@@ -101,6 +105,7 @@ const features: FeatureSection[] = [
   },
   {
     icon: GitCompareArrows,
+    id: "de",
     title: "Differential Expression",
     description:
       "Select a group of cells and instantly find their marker genes. Sort by log-fold change or adjusted p-value to identify the most significant differences.",
@@ -116,6 +121,7 @@ const features: FeatureSection[] = [
   },
   {
     icon: Palette,
+    id: "display",
     title: "Display Customisation",
     description:
       "Fine-tune the visualisation with adjustable point size, expression scale, percentile clipping, and toggle cluster labels or legend visibility.",
@@ -130,6 +136,7 @@ const features: FeatureSection[] = [
   },
   {
     icon: Layers,
+    id: "upload",
     title: "Upload Your Own Data",
     description:
       "Bring your own single-cell dataset in JSON format. The explorer instantly loads your data — no server required, everything runs in the browser.",
@@ -180,13 +187,30 @@ export default function Showcase() {
               Single-Cell Explorer
             </span>
           </div>
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
-          >
-            Open Explorer
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-4">
+              {features.map((f) => (
+                <a
+                  key={f.id}
+                  href={`#${f.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById(f.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {f.title}
+                </a>
+              ))}
+            </div>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors"
+            >
+              Open Explorer
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -240,7 +264,9 @@ export default function Showcase() {
       <section className="container mx-auto px-4 py-20 space-y-32">
         {features.map((feat, i) => (
           <div
+            id={feat.id}
             key={feat.title}
+            style={{ scrollMarginTop: "5rem" }}
             className={`flex flex-col ${
               feat.reverse ? "lg:flex-row-reverse" : "lg:flex-row"
             } items-center gap-12 lg:gap-20`}
